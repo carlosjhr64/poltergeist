@@ -6,9 +6,11 @@ const Gtk = imports.gi.Gtk;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const prettyNames = {
+	'mid-screen': 'Global Put in the middle of the screen',
+	'up-screen': 'Global Put in the middle top of the screen',
+	'down-screen': 'Global Put in the middle bottom of the screen',
 	'toggle-left': 'Global Toggle size while anchored to the left',
 	'toggle-right': 'Global Toggle size while anchored to the right',
-	'midscreen': 'Global Put in the middle of the screen',
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -40,7 +42,7 @@ function setChild(widget, child) {
 
 // eslint-disable-next-line no-unused-vars
 function buildPrefsWidget() {
-	const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.bifocals');
+	const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.evil-gnome');
 	const grid = new Gtk.Grid({
 		column_spacing: 10,
 		orientation: Gtk.Orientation.VERTICAL,

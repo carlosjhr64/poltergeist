@@ -1,16 +1,8 @@
 {
-  "name": "Bifocals",
-  "description": "Gnome extension adding more window management keyboard shortcuts.\n\n* Left / right 'view split' anchoring cycles through 3 sizes: 1/3, 1/2, and 2/3 of the current screen width.\n*Adds 'mid screen' of centering the window with 3/4 screen height and width.",
-  "uuid": "bifocals@shiznatix",
-  "url": "https://github.com/shiznatix/bifocals-gnome-extension",
-  "version": 1,
-  "shell-version": [
-    "3.30",
-    "3.32",
-    "3.34",
-    "3.35",
-    "3.36",
-    "3.38",
-    "40"
-  ]
+	"name" : "Evil Gnome",
+	"description" : "Very evil gnome window assistant",
+	"shell-version" : [ "40.10" ],
+	"url" : "https://github.com/carlosjhr64/evil-gnome-extension",
+	"uuid" : "evil-gnome@carlosjhr64",
+	"version" : 1.210716
 }
