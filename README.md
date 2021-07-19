@@ -1,6 +1,7 @@
 # Evil Gnome Extension
 Gnome extension adding more window management keyboard shortcuts.
 Tested on Wayland/Gnome 40.10.
+Originally cloned from [shiznatix's Bifocals](https://github.com/shiznatix/bifocals-gnome-extension).
 
 # Installation via git-clone
 ```shell
