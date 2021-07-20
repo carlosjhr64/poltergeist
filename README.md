@@ -23,6 +23,7 @@ $ git clone https://github.com/carlosjhr64/evil-gnome-extension.git evil-gnome@c
 | toggle-right | S-M-l      | Places window mid-right (or anchored right depending on size)|
 
 * Side anchored windows will have their widths toggled to different lengths
+* Double tap mid-screen will take a non standard sized window to the standard large sized window.
 
 # Helpful commands & links
 * `gnome-extensions-app`: an application for configuring and removing GNOME Shell extensions
