@@ -44,10 +44,10 @@ function getRectangles(window) {
     x: x,
     y: y,
     z: monitorWorkArea.x,
-    a: x*(2 - Phi),
-    b: y*(Phi - 1),
-    p: x*Third - (1 + Third)*Pad,
-    q: y*Half - (1 + Half)*Pad,
+    a: Math.round(x*(2 - Phi)),
+    b: Math.round(y*(Phi - 1)),
+    p: Math.round(x*Third - (1 + Third)*Pad),
+    q: Math.round(y*Half - (1 + Half)*Pad),
   };
 }
 
@@ -68,9 +68,21 @@ function getResizeWidth(r) {
   return w1;
 }
 
+function toggleWidth(r) {
+  if (r.w==r.a && r.h==r.b){ return r.p }
+  if (r.w==r.p && r.h==r.q){ return r.a }
+  return wide(r)? r.a : r.w;
+}
+
+function toggleHeight(r) {
+  if (r.w==r.a && r.h==r.b){ return r.q }
+  if (r.w==r.p && r.h==r.q){ return r.b }
+  return tall(r)? r.b : r.h;
+}
+
 function centerWindow(window, r) {
-  const w = wide(r)? r.a : r.w;
-  const h = tall(r)? r.b : r.h;
+  const w = toggleWidth(r);
+  const h = toggleHeight(r);
   const x = r.z + Half*(r.x - w);
   const y = Half*(r.y - h);
   window.unmaximize(Meta.MaximizeFlags.BOTH);
