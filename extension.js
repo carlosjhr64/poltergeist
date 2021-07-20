@@ -68,19 +68,34 @@ function getResizeWidth(r) {
   return w1;
 }
 
+var Timestamp = 0;
+var Elapsed = 0;
+function setElapsed() {
+  const now = Date.now();
+  Elapsed = now - Timestamp;
+  Timestamp = now;
+}
+
+function doubleTap() {
+  return Elapsed < 500;
+}
+
 function toggleWidth(r) {
   if (r.w==r.a && r.h==r.b){ return r.p }
   if (r.w==r.p && r.h==r.q){ return r.a }
+  if (doubleTap()){ return r.a }
   return wide(r)? r.a : r.w;
 }
 
 function toggleHeight(r) {
   if (r.w==r.a && r.h==r.b){ return r.q }
   if (r.w==r.p && r.h==r.q){ return r.b }
+  if (doubleTap()){ return r.b }
   return tall(r)? r.b : r.h;
 }
 
 function centerWindow(window, r) {
+  setElapsed();
   const w = toggleWidth(r);
   const h = toggleHeight(r);
   const x = r.z + Half*(r.x - w);
