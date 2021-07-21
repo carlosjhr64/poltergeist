@@ -81,16 +81,20 @@ function doubleTap() {
 }
 
 function toggleWidth(r) {
-  if (r.w==r.a && r.h==r.b){ return r.p }
-  if (r.w==r.p && r.h==r.q){ return r.a }
-  if (doubleTap()){ return r.a }
+  if (doubleTap()){
+    if (r.w==r.a && r.h==r.b){ return r.p }
+    if (r.w==r.p && r.h==r.q){ return r.a }
+    return r.a
+  }
   return wide(r)? r.a : r.w;
 }
 
 function toggleHeight(r) {
-  if (r.w==r.a && r.h==r.b){ return r.q }
-  if (r.w==r.p && r.h==r.q){ return r.b }
-  if (doubleTap()){ return r.b }
+  if (doubleTap()){
+    if (r.w==r.a && r.h==r.b){ return r.q }
+    if (r.w==r.p && r.h==r.q){ return r.b }
+    return r.b
+  }
   return tall(r)? r.b : r.h;
 }
 
