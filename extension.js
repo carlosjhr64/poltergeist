@@ -77,7 +77,7 @@ function setElapsed() {
 }
 
 function doubleTap() {
-  return Elapsed < 500;
+  return Elapsed < 250;
 }
 
 function toggleWidth(r) {
@@ -118,9 +118,10 @@ function downWindow(window, r) {
     window.move_resize_frame(false, r.z, y, r.w, h);
     window.maximize(Meta.MaximizeFlags.HORIZONTAL);
   } else {
+    setElapsed();
     const w = r.w;
     const x = r.z + Half*(r.x - w);
-    const y = Half*(r.y + Pad);
+    const y = doubleTap()? r.y - h - Pad : Half*(r.y + Pad);
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_frame(false, x, y);
     window.move_resize_frame(false, x, y, w, h);
@@ -135,9 +136,10 @@ function upWindow(window, r) {
     window.move_resize_frame(false, r.z, 0, r.w, h);
     window.maximize(Meta.MaximizeFlags.HORIZONTAL);
   } else {
+    setElapsed();
     const w = r.w;
     const x = r.z + Half*(r.x - w);
-    const y = Half*(r.y - Pad) - h;
+    const y = doubleTap()? Pad : Half*(r.y - Pad) - h;
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_frame(false, x, y);
     window.move_resize_frame(false, x, y, w, h);
@@ -152,7 +154,8 @@ function leftWindow(window, r) {
     window.move_resize_frame(false, r.z, 0, w, r.h);
     window.maximize(Meta.MaximizeFlags.VERTICAL);
   } else {
-    const w = r.z + Half*(r.x - 3*r.w) - Pad;
+    setElapsed();
+    const w = doubleTap()? Pad : r.z + Half*(r.x - 3*r.w) - Pad;
     const h = Half*(r.y - r.h);
     window.move_frame(false, w, h);
   }
@@ -167,7 +170,8 @@ function rightWindow(window, r) {
     window.move_resize_frame(false, z, 0, w, r.h);
     window.maximize(Meta.MaximizeFlags.VERTICAL);
   }else{
-    const w = r.z + Half*(r.x + r.w) + Pad;
+    setElapsed();
+    const w = doubleTap()? r.z + r.x - r.w - Pad : r.z + Half*(r.x + r.w) + Pad;
     const h = Half*(r.y - r.h);
     window.move_frame(false, w, h);
   }
