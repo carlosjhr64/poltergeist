@@ -52,54 +52,56 @@ function getRectangles(window) {
 }
 
 function getResizeWidth(r) {
-  const w = r.w;
-  if (r.h < r.y) { return w; }
-  const x = r.x;
-  const w1 = Fourth*x;
-  if (w + 1 < w1) { return w1; }
-  const w2 = Third*x;
-  if (w + 1 < w2) { return w2; }
-  const w3 = x*(2 - Phi);
-  if (w + 1 < w3) { return w3; }
-  const w4 = Half*x;
-  if (w + 1 < w4) { return w4; }
-  const w5 = x*(Phi - 1);
-  if (w + 1 < w5) { return w5; }
-  return w1;
+  const count = Count%5;
+  if (count==0) { return r.x*Fourth; }
+  if (count==1) { return r.x*Third; }
+  if (count==2) { return r.x*(2-Phi); }
+  if (count==3) { return r.x*Half; }
+  return r.x*(Phi-1);
 }
 
 var Timestamp = 0;
-var Elapsed = 0;
-function setElapsed() {
+var Elapsed   = 0;
+var Count     = 0;
+var Caller    = 'Z';
+
+function setCount(caller) {
   const now = Date.now();
   Elapsed = now - Timestamp;
   Timestamp = now;
-}
-
-function doubleTap() {
-  return Elapsed < 250;
+  if (Elapsed < 1000) {
+    if (Caller==caller) {
+      Count = Count + 1;
+    } else {
+      Caller = caller;
+      Count = 0;
+    }
+  } else {
+    Caller = caller;
+    Count = 0;
+  }
 }
 
 function toggleWidth(r) {
-  if (doubleTap()){
-    if (r.w==r.a && r.h==r.b){ return r.p }
-    if (r.w==r.p && r.h==r.q){ return r.a }
-    return r.a
+  if (Count>0){
+    if (r.w==r.a && r.h==r.b){ return r.p; }
+    if (r.w==r.p && r.h==r.q){ return r.a; }
+    return r.a;
   }
   return wide(r)? r.a : r.w;
 }
 
 function toggleHeight(r) {
-  if (doubleTap()){
-    if (r.w==r.a && r.h==r.b){ return r.q }
-    if (r.w==r.p && r.h==r.q){ return r.b }
-    return r.b
+  if (Count>0){
+    if (r.w==r.a && r.h==r.b){ return r.q; }
+    if (r.w==r.p && r.h==r.q){ return r.b; }
+    return r.b;
   }
   return tall(r)? r.b : r.h;
 }
 
 function centerWindow(window, r) {
-  setElapsed();
+  setCount('C');
   const w = toggleWidth(r);
   const h = toggleHeight(r);
   const x = r.z + Half*(r.x - w);
@@ -112,16 +114,17 @@ function centerWindow(window, r) {
 function downWindow(window, r) {
   const h = tall(r)? r.q : r.h;
   if (wider(r)) {
+    setCount('D');
     const y = r.y - h;
     window.unmaximize(Meta.MaximizeFlags.VERTICAL);
     window.move_frame(false, r.z, y);
     window.move_resize_frame(false, r.z, y, r.w, h);
     window.maximize(Meta.MaximizeFlags.HORIZONTAL);
   } else {
-    setElapsed();
+    setCount('d');
     const w = r.w;
     const x = r.z + Half*(r.x - w);
-    const y = doubleTap()? r.y - h - Pad : Half*(r.y + Pad);
+    const y = (Count%2==1)? r.y - h - Pad : Half*(r.y + Pad);
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_frame(false, x, y);
     window.move_resize_frame(false, x, y, w, h);
@@ -131,15 +134,16 @@ function downWindow(window, r) {
 function upWindow(window, r) {
   const h = tall(r)? r.q : r.h;
   if (wider(r)) {
+    setCount('U');
     window.unmaximize(Meta.MaximizeFlags.VERTICAL);
     window.move_frame(false, r.z, 0);
     window.move_resize_frame(false, r.z, 0, r.w, h);
     window.maximize(Meta.MaximizeFlags.HORIZONTAL);
   } else {
-    setElapsed();
+    setCount('u');
     const w = r.w;
     const x = r.z + Half*(r.x - w);
-    const y = doubleTap()? Pad : Half*(r.y - Pad) - h;
+    const y = (Count%2==1)? Pad : Half*(r.y - Pad) - h;
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_frame(false, x, y);
     window.move_resize_frame(false, x, y, w, h);
@@ -148,14 +152,15 @@ function upWindow(window, r) {
 
 function leftWindow(window, r) {
   if (wide(r) || taller(r)) {
+    setCount('L');
     const w = getResizeWidth(r);
     window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
     window.move_frame(false, r.z, 0);
     window.move_resize_frame(false, r.z, 0, w, r.h);
     window.maximize(Meta.MaximizeFlags.VERTICAL);
   } else {
-    setElapsed();
-    const w = doubleTap()? Pad : r.z + Half*(r.x - 3*r.w) - Pad;
+    setCount('l');
+    const w = (Count%2==1)? Pad : r.z + Half*(r.x - 3*r.w) - Pad;
     const h = Half*(r.y - r.h);
     window.move_frame(false, w, h);
   }
@@ -163,6 +168,7 @@ function leftWindow(window, r) {
 
 function rightWindow(window, r) {
   if (wide(r) || taller(r)) {
+    setCount('R');
     const w = getResizeWidth(r);
     const z = r.z + r.x - w;
     window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
@@ -170,8 +176,8 @@ function rightWindow(window, r) {
     window.move_resize_frame(false, z, 0, w, r.h);
     window.maximize(Meta.MaximizeFlags.VERTICAL);
   }else{
-    setElapsed();
-    const w = doubleTap()? r.z + r.x - r.w - Pad : r.z + Half*(r.x + r.w) + Pad;
+    setCount('r');
+    const w = (Count%2==1)? r.z + r.x - r.w - Pad : r.z + Half*(r.x + r.w) + Pad;
     const h = Half*(r.y - r.h);
     window.move_frame(false, w, h);
   }
