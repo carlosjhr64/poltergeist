@@ -151,35 +151,36 @@ function upWindow(window, r) {
 }
 
 function leftWindow(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
   if (wide(r) || taller(r)) {
     setCount('L');
     const w = getResizeWidth(r);
-    window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
-    window.move_frame(false, r.z, 0);
-    window.move_resize_frame(false, r.z, 0, w, r.h);
-    window.maximize(Meta.MaximizeFlags.VERTICAL);
+    const h = r.y;
+    const x = r.z; // TODO: what is z?
+    const y = 0;
+    window.move_resize_frame(false, x, y, w, h);
   } else {
     setCount('l');
-    const w = (Count%2==1)? Pad : r.z + Half*(r.x - 3*r.w) - Pad;
-    const h = Half*(r.y - r.h);
-    window.move_frame(false, w, h);
+    const x = (Count%2==1)? Pad : r.z + Half*(r.x - 3*r.w) - Pad; // TODO: what is z?
+    const y = Half*(r.y - r.h);
+    window.move_frame(false, x, y);
   }
 }
 
 function rightWindow(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
   if (wide(r) || taller(r)) {
     setCount('R');
     const w = getResizeWidth(r);
-    const z = r.z + r.x - w;
-    window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
-    window.move_frame(false, z, 0);
-    window.move_resize_frame(false, z, 0, w, r.h);
-    window.maximize(Meta.MaximizeFlags.VERTICAL);
+    const h = r.y;
+    const x = r.z + r.x - w; // TODO: what is z?
+    const y = 0;
+    window.move_resize_frame(false, x, y, w, h);
   }else{
     setCount('r');
-    const w = (Count%2==1)? r.z + r.x - r.w - Pad : r.z + Half*(r.x + r.w) + Pad;
-    const h = Half*(r.y - r.h);
-    window.move_frame(false, w, h);
+    const x = (Count%2==1)? r.z + r.x - r.w - Pad : r.z + Half*(r.x + r.w) + Pad; // TODO: what is z?
+    const y = Half*(r.y - r.h);
+    window.move_frame(false, x, y);
   }
 }
 
