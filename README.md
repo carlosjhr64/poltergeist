@@ -1,6 +1,7 @@
 # Evil Gnome Extension
 Gnome extension adding more window management keyboard shortcuts.
-Tested on Wayland/Gnome 40.10.
+Tested on Fedora-34/Gnome-40.10/Wayland with Hide Panel extension on a 3840x2160(16:9)(4K) display.
+But coded generally, should work on any displays.
 Originally cloned from [shiznatix's Bifocals](https://github.com/shiznatix/bifocals-gnome-extension).
 
 # Installation via git-clone
