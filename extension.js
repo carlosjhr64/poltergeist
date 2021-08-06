@@ -3,9 +3,10 @@ const Main = imports.ui.main;
 const Me   = imports.misc.extensionUtils.getCurrentExtension();
 
 const Phi    = 1.618033988749895;
-const Fourth = 1.0/4.0;
-const Third  = 1.0/3.0;
 const Half   = 1.0/2.0;
+const Third  = 1.0/3.0;
+const Fourth = 1.0/4.0;
+const Fifth  = 1.0/5.0;
 
 const Pad = 20;
 
@@ -39,16 +40,24 @@ function getRectangles(window) {
   const y = monitorWorkArea.height;
 
   return {
+    // Window
     w: rect.width,
     h: rect.height,
+    // Work area
     x: x,
     y: y,
+    // Work area origin
     u: monitorWorkArea.x,
     v: monitorWorkArea.y,
+    // Big
     a: Math.round(x*(2 - Phi)),
     b: Math.round(y*(Phi - 1)),
+    // Medium
     p: Math.round(x*Third - (1 + Third)*Pad),
     q: Math.round(y*Half - (1 + Half)*Pad),
+    // Small
+    s: Math.round(x*Fifth - (1 + Fifth)*Pad),
+    t: Math.round(y*Fourth - (1 + Fourth)*Pad),
   };
 }
 
@@ -83,20 +92,28 @@ function setCount(caller) {
   }
 }
 
+function isBig(r) {
+  return r.w==r.a && r.h==r.b;
+}
+
 function toggleWidth(r) {
   if (Count>0){
-    if (r.w==r.a && r.h==r.b){ return r.p; }
-    if (r.w==r.p && r.h==r.q){ return r.a; }
-    return r.a;
+    if (isBig(r)) { Count = 2; }
+    const n = Count%3;
+    if (n==1){ return r.a; }
+    if (n==2){ return r.p; }
+    return r.s;
   }
   return wide(r)? r.a : r.w;
 }
 
 function toggleHeight(r) {
   if (Count>0){
-    if (r.w==r.a && r.h==r.b){ return r.q; }
-    if (r.w==r.p && r.h==r.q){ return r.b; }
-    return r.b;
+    if (isBig(r)) { Count = 2; }
+    const n = Count%3;
+    if (n==1){ return r.b; }
+    if (n==2){ return r.q; }
+    return r.t;
   }
   return tall(r)? r.b : r.h;
 }
