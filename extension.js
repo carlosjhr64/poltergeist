@@ -74,6 +74,7 @@ var Timestamp = 0;
 var Elapsed   = 0;
 var Count     = 0;
 var Caller    = 'Z';
+var Previous  = 'Z';
 
 function setCount(caller) {
   const now = Date.now();
@@ -81,14 +82,17 @@ function setCount(caller) {
   Timestamp = now;
   if (Elapsed < 1000) {
     if (Caller==caller) {
-      Count = Count + 1;
+      Previous = 'Z';
+      Count    = Count + 1;
     } else {
-      Caller = caller;
-      Count = 0;
+      Previous = Caller;
+      Caller   = caller;
+      Count    = 0;
     }
   } else {
-    Caller = caller;
-    Count = 0;
+    Previous = 'Z';
+    Caller   = caller;
+    Count    = 0;
   }
 }
 
@@ -131,22 +135,50 @@ function centerWindow(window, r) {
 function downWindow(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
   setCount('D');
-  const w = r.w;
-  const h = tall(r)? r.q : r.h;
-  const x = Half*(r.x - w);
-  const y = (Count%2==1)? r.y - h - Pad : Half*(r.y + Pad);
-  window.move_frame(false, x, y);
-  window.move_resize_frame(false, r.u+x, r.u+y, w, h);
+  if (Previous=='l') {
+    const w = r.w;
+    const h = tall(r)? r.q : r.h;
+    const x = Pad;
+    const y = r.y - r.h - Pad;
+    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+  } else if (Previous=='r') {
+    const w = r.w;
+    const h = tall(r)? r.q : r.h;
+    const x = r.x - r.w - Pad;
+    const y = r.y - r.h - Pad;
+    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+  } else {
+    const w = r.w;
+    const h = tall(r)? r.q : r.h;
+    const x = Half*(r.x - w);
+    const y = (Count%2==1)? r.y - h - Pad : Half*(r.y + Pad);
+    window.move_frame(false, x, y);
+    window.move_resize_frame(false, r.u+x, r.u+y, w, h);
+  }
 }
 
 function upWindow(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
   setCount('U');
-  const w = r.w;
-  const h = tall(r)? r.q : r.h;
-  const x = Half*(r.x - w);
-  const y = (Count%2==1)? Pad : Half*(r.y - Pad) - h;
-  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+  if (Previous=='l') {
+    const w = r.w;
+    const h = tall(r)? r.q : r.h;
+    const x = Pad;
+    const y = Pad;
+    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+  } else if (Previous=='r') {
+    const w = r.w;
+    const h = tall(r)? r.q : r.h;
+    const x = r.x - r.w - Pad;
+    const y = Pad;
+    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+  } else {
+    const w = r.w;
+    const h = tall(r)? r.q : r.h;
+    const x = Half*(r.x - w);
+    const y = (Count%2==1)? Pad : Half*(r.y - Pad) - h;
+    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+  }
 }
 
 function leftWindow(window, r) {
