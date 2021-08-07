@@ -130,41 +130,23 @@ function centerWindow(window, r) {
 
 function downWindow(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
-  if (wider(r)) {
-    setCount('D');
-    const w = r.x;
-    const h = tall(r)? r.q : r.h;
-    const x = 0;
-    const y = r.y - h;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-  } else {
-    setCount('d');
-    const w = r.w;
-    const h = tall(r)? r.q : r.h;
-    const x = Half*(r.x - w);
-    const y = (Count%2==1)? r.y - h - Pad : Half*(r.y + Pad);
-    window.move_frame(false, x, y);
-    window.move_resize_frame(false, r.u+x, r.u+y, w, h);
-  }
+  setCount('D');
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Half*(r.x - w);
+  const y = (Count%2==1)? r.y - h - Pad : Half*(r.y + Pad);
+  window.move_frame(false, x, y);
+  window.move_resize_frame(false, r.u+x, r.u+y, w, h);
 }
 
 function upWindow(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
-  if (wider(r)) {
-    setCount('U');
-    const w = r.x;
-    const h = tall(r)? r.q : r.h;
-    const x = 0;
-    const y = 0;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-  } else {
-    setCount('u');
-    const w = r.w;
-    const h = tall(r)? r.q : r.h;
-    const x = Half*(r.x - w);
-    const y = (Count%2==1)? Pad : Half*(r.y - Pad) - h;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-  }
+  setCount('U');
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Half*(r.x - w);
+  const y = (Count%2==1)? Pad : Half*(r.y - Pad) - h;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
 }
 
 function leftWindow(window, r) {
@@ -203,10 +185,6 @@ function rightWindow(window, r) {
 
 function wide(r) {
   return r.w > r.p;
-}
-
-function wider(r) {
-  return r.w > r.a;
 }
 
 function tall(r) {
