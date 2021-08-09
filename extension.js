@@ -157,23 +157,8 @@ function downWindow(window, r) {
   }
 }
 
-function up0(window, r) {
-  const w = r.w;
-  const h = tall(r)? r.q : r.h;
-  const x = Half*(r.x - w);
-  const y = Half*(r.y - Pad) - h;
-  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-}
-
-function up1(window, r) {
-  const w = r.w;
-  const h = tall(r)? r.q : r.h;
-  const x = Half*(r.x - w);
-  const y = Pad;
-  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-}
-
 function up2(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
   const w = r.w;
   const h = r.y - 2*Pad;
   const x = Half*(r.x - w);
@@ -181,35 +166,70 @@ function up2(window, r) {
   window.move_resize_frame(false, r.u+x, r.v+y, w, h);
 }
 
-function upWindow(window, r) {
+function up1(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Half*(r.x - w);
+  const y = Pad;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function up0(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Half*(r.x - w);
+  const y = Half*(r.y - Pad) - h;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function upSwitch(window, r) {
+  switch(Count%3) {
+    case 0:
+      up0(window, r);
+      break;
+    case 1:
+      up1(window, r);
+      break;
+    case 2:
+      up2(window, r);
+      break;
+    default:
+      break; // :-??
+  }
+}
+
+function upRight(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = r.x - r.w - Pad;
+  const y = Pad;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function upLeft(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Pad;
+  const y = Pad;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function upWindow(window, r) {
   setCount('U');
-  if (Previous=='l') {
-    const w = r.w;
-    const h = tall(r)? r.q : r.h;
-    const x = Pad;
-    const y = Pad;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-  } else if (Previous=='r') {
-    const w = r.w;
-    const h = tall(r)? r.q : r.h;
-    const x = r.x - r.w - Pad;
-    const y = Pad;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
-  } else {
-    switch(Count%3) {
-      case 0:
-        up0(window, r);
-        break;
-      case 1:
-        up1(window, r);
-        break;
-      case 2:
-        up2(window, r);
-        break;
-      default:
-        break; // :-??
-    }
+  switch(Previous) {
+    case 'l':
+      upLeft(window, r);
+      break;
+    case 'r':
+      upRight(window, r);
+      break;
+    default:
+      upSwitch(window, r);
+      break;
   }
 }
 
