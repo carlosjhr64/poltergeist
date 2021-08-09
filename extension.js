@@ -62,11 +62,11 @@ function getRectangles(window) {
 }
 
 function getResizeWidth(r) {
-  const count = Count%5;
-  if (count==0) { return r.x*Fourth; }
-  if (count==1) { return r.x*Third; }
-  if (count==2) { return r.x*(2-Phi); }
-  if (count==3) { return r.x*Half; }
+  const n = Count%5;
+  if (n==0) { return r.x*Fourth; }
+  if (n==1) { return r.x*Third; }
+  if (n==2) { return r.x*(2-Phi); }
+  if (n==3) { return r.x*Half; }
   return r.x*(Phi-1);
 }
 
@@ -157,6 +157,30 @@ function downWindow(window, r) {
   }
 }
 
+function up0(window, r) {
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Half*(r.x - w);
+  const y = Half*(r.y - Pad) - h;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function up1(window, r) {
+  const w = r.w;
+  const h = tall(r)? r.q : r.h;
+  const x = Half*(r.x - w);
+  const y = Pad;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function up2(window, r) {
+  const w = r.w;
+  const h = r.y - 2*Pad;
+  const x = Half*(r.x - w);
+  const y = Pad;
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
 function upWindow(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
   setCount('U');
@@ -173,11 +197,19 @@ function upWindow(window, r) {
     const y = Pad;
     window.move_resize_frame(false, r.u+x, r.v+y, w, h);
   } else {
-    const w = r.w;
-    const h = tall(r)? r.q : r.h;
-    const x = Half*(r.x - w);
-    const y = (Count%2==1)? Pad : Half*(r.y - Pad) - h;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+    switch(Count%3) {
+      case 0:
+        up0(window, r);
+        break;
+      case 1:
+        up1(window, r);
+        break;
+      case 2:
+        up2(window, r);
+        break;
+      default:
+        break; // :-??
+    }
   }
 }
 
