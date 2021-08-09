@@ -62,12 +62,20 @@ function getRectangles(window) {
 }
 
 function getResizeWidth(r) {
-  const n = Count%5;
-  if (n==0) { return r.x*Fourth; }
-  if (n==1) { return r.x*Third; }
-  if (n==2) { return r.x*(2-Phi); }
-  if (n==3) { return r.x*Half; }
-  return r.x*(Phi-1);
+  switch(Count%5) {
+    case 0:
+      return r.x*Fourth;
+    case 1:
+      return r.x*Third;
+    case 2:
+      return r.x*(2-Phi);
+    case 3:
+      return r.x*Half;
+    case 4:
+      return r.x*(Phi-1);
+    default:
+      break; // :-??
+  }
 }
 
 var Timestamp = 0;
@@ -103,10 +111,16 @@ function isBig(r) {
 function toggleWidth(r) {
   if (Count>0){
     if (isBig(r)) { Count = 2; }
-    const n = Count%3;
-    if (n==1){ return r.a; }
-    if (n==2){ return r.p; }
-    return r.s;
+    switch(Count%3) {
+      case 0:
+        return r.s;
+      case 1:
+        return r.a;
+      case 2:
+        return r.p;
+      default:
+        break; // :-??
+    }
   }
   return wide(r)? r.a : r.w;
 }
@@ -114,10 +128,16 @@ function toggleWidth(r) {
 function toggleHeight(r) {
   if (Count>0){
     if (isBig(r)) { Count = 2; }
-    const n = Count%3;
-    if (n==1){ return r.b; }
-    if (n==2){ return r.q; }
-    return r.t;
+    switch(Count%3) {
+      case 0:
+        return r.t;
+      case 1:
+        return r.b;
+      case 2:
+        return r.q;
+      default:
+        break; // :-??
+    }
   }
   return tall(r)? r.b : r.h;
 }
