@@ -292,20 +292,49 @@ function upWindow(window, r) {
   }
 }
 
-function leftWindow(window, r) {
+function left1(window, r) {
   window.unmaximize(Meta.MaximizeFlags.BOTH);
+  const x = (Count%2==1)? Pad : Half*(r.x - 3*r.w) - Pad;
+  const y = Half*(r.y - r.h);
+  window.move_frame(false, r.u+x, r.v+y);
+}
+
+function left0(window, r) {
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  const x = (Count%2==1)? Pad : Half*(r.x - 3*r.w) - Pad;
+  const y = Half*(r.y - r.h);
+  window.move_frame(false, r.u+x, r.v+y);
+}
+
+function leftSwitch(window, r) {
+  switch(Count%2) {
+    case 0:
+      left0(window, r);
+      break;
+    case 1:
+      left1(window, r);
+      break;
+    default:
+      break; // :-??
+  }
+}
+
+function left(window, r) {
+  const w = getResizeWidth(r);
+  const h = r.y;
+  const x = 0;
+  const y = 0;
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function leftWindow(window, r) {
   if (wide(r) || taller(r)) {
     setCount('L');
-    const w = getResizeWidth(r);
-    const h = r.y;
-    const x = 0;
-    const y = 0;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+    left(window, r);
   } else {
     setCount('l');
-    const x = (Count%2==1)? Pad : Half*(r.x - 3*r.w) - Pad;
-    const y = Half*(r.y - r.h);
-    window.move_frame(false, r.u+x, r.v+y);
+    leftSwitch(window, r);
   }
 }
 
