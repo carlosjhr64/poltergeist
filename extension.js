@@ -338,20 +338,49 @@ function leftWindow(window, r) {
   }
 }
 
-function rightWindow(window, r) {
+function right1(window, r) {
+  const x = r.x - r.w - Pad;
+  const y = Half*(r.y - r.h);
   window.unmaximize(Meta.MaximizeFlags.BOTH);
+  window.move_frame(false, r.u+x, r.v+y);
+}
+
+function right0(window, r) {
+  const x = Half*(r.x + r.w) + Pad;
+  const y = Half*(r.y - r.h);
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  window.move_frame(false, r.u+x, r.v+y);
+}
+
+function rightSwitch(window, r) {
+  switch(Count%2) {
+    case 0:
+      right0(window, r);
+      break;
+    case 1:
+      right1(window, r);
+      break;
+    default:
+      break; // :-??
+  }
+}
+
+function right(window, r) {
+  const w = getResizeWidth(r);
+  const h = r.y;
+  const x = r.x - w;
+  const y = 0;
+  window.unmaximize(Meta.MaximizeFlags.BOTH);
+  window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+}
+
+function rightWindow(window, r) {
   if (wide(r) || taller(r)) {
     setCount('R');
-    const w = getResizeWidth(r);
-    const h = r.y;
-    const x = r.x - w;
-    const y = 0;
-    window.move_resize_frame(false, r.u+x, r.v+y, w, h);
+    right(window, r);
   }else{
     setCount('r');
-    const x = (Count%2==1)? r.x - r.w - Pad : Half*(r.x + r.w) + Pad;
-    const y = Half*(r.y - r.h);
-    window.move_frame(false, r.u+x, r.v+y);
+    rightSwitch(window, r);
   }
 }
 
