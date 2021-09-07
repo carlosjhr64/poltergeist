@@ -62,16 +62,18 @@ function getRectangles(window) {
 }
 
 function getResizeWidth(r) {
-  switch(Count%5) {
+  switch(Count%6) {
     case 0:
-      return r.x*Fourth;
+      return r.x*Fifth;
     case 1:
-      return r.x*Third;
+      return r.x*Half*(Phi-1);
     case 2:
-      return r.x*(2-Phi);
+      return r.x*Third;
     case 3:
-      return r.x*Half;
+      return r.x*(2-Phi);
     case 4:
+      return r.x*Half;
+    case 5:
       return r.x*(Phi-1);
     default:
       break; // :-??

@@ -18,18 +18,18 @@ $ git clone https://github.com/carlosjhr64/evil-gnome-extension.git evil-gnome@c
 | Name         | Keybinding | Description |
 | :---         | :---       | :---        |
 | mid-screen   | S-m        | Places window mid-centered |
-| up-screen    | S-k        | Places window top-centered (h-maxed depending on width)|
-| down-screen  | S-j        | Places window botom-centered (h-maxed depending on width)|
-| toggle-left  | S-h        | Places window mid-left (or anchored left depeding on size)|
+| up-screen    | S-k        | Places window top-centered |
+| down-screen  | S-j        | Places window bottom-centered |
+| toggle-left  | S-h        | Places window mid-left (or anchored left depending on size)|
 | toggle-right | S-l        | Places window mid-right (or anchored right depending on size)|
 
 * Side anchored windows will have their widths toggled to different lengths
 * Double tap mid-screen will toggle window size amount three standard sizes
 * Double tap S-{hjkl} will place window at the chosen edge
-* Display corners can be reach via S-{hl}S-{jk} in quick succesion
+* Display corners can be reach via S-{hl}S-{jk} in quick succession
 
 # Helpful commands & links
 * `gnome-extensions-app`: an application for configuring and removing GNOME Shell extensions
 * `journalctl -f -o cat /usr/bin/gnome-shell`: follow logs
-* `glib-compile-schemas schemas` Must be run after any changes to gchema.xml
+* `glib-compile-schemas schemas` Must be run after any changes to schema.xml
 * Typescript Gnome types (incomplete) https://raw.githubusercontent.com/gTile/gTile/master/gnometypes.ts
