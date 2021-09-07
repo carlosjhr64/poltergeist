@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -f bifocals.zip
+rm -f evil-gnome.zip
 mkdir -p ./tmp
 mkdir -p ./tmp/schemas
 cp ./schemas/gschemas.compiled ./tmp/schemas
@@ -10,6 +10,6 @@ cp LICENSE ./tmp/
 cp metadata.json ./tmp/
 cp prefs.js ./tmp/
 cd ./tmp
-zip -r ../bifocals.zip .
+zip -r ../evil-gnome.zip .
 cd ../
 rm -rf ./tmp
