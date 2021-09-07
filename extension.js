@@ -220,9 +220,9 @@ function downWindow(window, r) {
 
 function up2(window, r) {
   const w = r.w;
-  const h = r.y - 2*Pad;
+  const h = r.y;
   const x = Half*(r.x - w);
-  const y = Pad;
+  const y = 0;
   window.unmaximize(Meta.MaximizeFlags.BOTH);
   window.move_resize_frame(false, r.u+x, r.v+y, w, h);
 }
