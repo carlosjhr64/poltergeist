@@ -1,4 +1,4 @@
-# Evil Gnome Extension
+# Poltergeist
 Gnome extension adding more window management keyboard shortcuts.
 Tested on Fedora-34/Gnome-40.10/Wayland with Hide Panel extension on a 3840x2160(16:9)(4K) display.
 But coded generally, should work on any displays.
