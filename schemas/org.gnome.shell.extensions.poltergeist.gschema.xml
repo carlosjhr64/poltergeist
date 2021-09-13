@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
 
-  <schema id="org.gnome.shell.extensions.evil-gnome" path="/org/gnome/shell/extensions/evil-gnome/">
+  <schema id="org.gnome.shell.extensions.poltergeist" path="/org/gnome/shell/extensions/poltergeist/">
 
     <key type="as" name="mid-screen">
       <default><![CDATA[['<Super>m']]]></default>
