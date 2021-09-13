@@ -7,7 +7,7 @@ Originally cloned from [shiznatix's Bifocals](https://github.com/shiznatix/bifoc
 # Installation via git-clone
 ```shell
 $ cd ~/.local/share/gnome-shell/extensions/
-$ git clone https://github.com/carlosjhr64/evil-gnome-extension.git evil-gnome@carlosjhr64
+$ git clone https://github.com/carlosjhr64/poltergeist.git poltergeist@carlosjhr64
 ```
 
 # Shortcuts

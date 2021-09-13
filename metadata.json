@@ -1,8 +1,8 @@
 {
-	"name" : "Evil Gnome",
-	"description" : "Very evil gnome window assistant",
+	"name" : "Poltergeist",
+	"description" : "A very evil gnome window assistant",
 	"shell-version" : [ "40.10" ],
-	"url" : "https://github.com/carlosjhr64/evil-gnome-extension",
-	"uuid" : "evil-gnome@carlosjhr64",
-	"version" : 1.210907
+	"url" : "https://github.com/carlosjhr64/poltergeist",
+	"uuid" : "poltergeist@carlosjhr64",
+	"version" : 1.210913
 }

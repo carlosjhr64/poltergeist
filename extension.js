@@ -17,7 +17,7 @@ function getSettings() {
     GioSSS.get_default(),
     false,
   );
-  const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.evil-gnome', true);
+  const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.poltergeist', true);
 
   if (!schemaObj) {
     throw new Error('cannot find schemas');

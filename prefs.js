@@ -42,7 +42,7 @@ function setChild(widget, child) {
 
 // eslint-disable-next-line no-unused-vars
 function buildPrefsWidget() {
-	const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.evil-gnome');
+	const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.poltergeist');
 	const grid = new Gtk.Grid({
 		column_spacing: 10,
 		orientation: Gtk.Orientation.VERTICAL,
