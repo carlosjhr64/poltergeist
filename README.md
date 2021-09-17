@@ -5,7 +5,7 @@ But coded generally, should work on any displays.
 Originally cloned from [shiznatix's Bifocals](https://github.com/shiznatix/bifocals-gnome-extension).
 
 # Installation via git-clone
-```shell
+```console
 $ cd ~/.local/share/gnome-shell/extensions/
 $ git clone https://github.com/carlosjhr64/poltergeist.git poltergeist@carlosjhr64
 ```
